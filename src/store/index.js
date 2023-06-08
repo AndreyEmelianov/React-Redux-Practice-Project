@@ -1,39 +1,28 @@
-import { legacy_createStore } from 'redux';
+import { createSlice, configureStore } from '@reduxjs/toolkit';
 
 const initialState = { counter: 0, isCounterInvisible: false };
 
-const counterReducer = (state = initialState, action) => {
-	if (action.type === 'INCR') {
-		return {
-			counter: state.counter + 1,
-			isCounterInvisible: state.isCounterInvisible,
-		};
-	}
+const counterSlice = createSlice({
+	name: 'counter',
+	initialState,
+	reducers: {
+		incr(state) {
+			state.counter++;
+		},
+		decr(state) {
+			state.counter--;
+		},
+		increase(state, action) {
+			state.counter = state.counter + action.number;
+		},
+		setCounterVisibility(state) {
+			state.isCounterInvisible = !state.isCounterInvisible;
+		},
+	},
+});
 
-	if (action.type === 'INCREASE') {
-		return {
-			counter: state.counter + action.number,
-			isCounterInvisible: state.isCounterInvisible,
-		};
-	}
-
-	if (action.type === 'DECR') {
-		return {
-			counter: state.counter - 1,
-			isCounterInvisible: state.isCounterInvisible,
-		};
-	}
-
-	if (action.type === 'VISIBILITY') {
-		return {
-			counter: state.counter,
-			isCounterInvisible: !state.isCounterInvisible,
-		};
-	}
-
-	return state;
-};
-
-const store = legacy_createStore(counterReducer);
+const store = configureStore({
+	reducer: counterSlice.reducer,
+});
 
 export default store;
