@@ -4,6 +4,8 @@ import classes from './Counter.module.css';
 
 const Counter = () => {
 	const counter = useSelector((state) => state.counter);
+	const isCounterInvisible = useSelector((state) => state.isCounterInvisible);
+
 	const dispatchFunction = useDispatch();
 
 	const incrementHandler = () => {
@@ -18,12 +20,14 @@ const Counter = () => {
 		dispatchFunction({ type: 'DECR' });
 	};
 
-	const toggleCounterHandler = () => {};
+	const toggleCounterHandler = () => {
+		dispatchFunction({ type: 'VISIBILITY' });
+	};
 
 	return (
 		<main className={classes.counter}>
 			<h1>Счётчик</h1>
-			<div className={classes.value}>{counter}</div>
+			{!isCounterInvisible && <div className={classes.value}>{counter}</div>}
 			<div>
 				<button onClick={incrementHandler}>+</button>
 				<button onClick={increaseHandler}>+10</button>
