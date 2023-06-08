@@ -13,7 +13,7 @@ const counterSlice = createSlice({
 			state.counter--;
 		},
 		increase(state, action) {
-			state.counter = state.counter + action.number;
+			state.counter = state.counter + action.payload;
 		},
 		setCounterVisibility(state) {
 			state.isCounterInvisible = !state.isCounterInvisible;
@@ -24,5 +24,7 @@ const counterSlice = createSlice({
 const store = configureStore({
 	reducer: counterSlice.reducer,
 });
+
+export const counterActions = counterSlice.actions;
 
 export default store;
